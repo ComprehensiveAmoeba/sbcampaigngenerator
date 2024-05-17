@@ -35,7 +35,8 @@ The following fields are mandatory for the campaign creation process:
 ## Ad Group Options
 - **TOFU**: Top of Funnel campaign.
 - **MOFU**: Middle of Funnel campaign.
-- **LOFU**: Bottom of Funnel campaign.
+- **BOFU**: Bottom of Funnel campaign.
+- **Other**: opt out of the funnelling naming conventions or create a tag at the end of the campaign name.
 
 ## Dependencies
 - Streamlit
