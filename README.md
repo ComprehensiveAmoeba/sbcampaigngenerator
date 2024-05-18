@@ -12,7 +12,7 @@ The SB Multi AdGroup Campaigns Generator is a Streamlit app designed to automate
 
 ## How to Use
 1. **Prepare Your Data**: Use the provided g-sheet template (get it from ComprehensiveAmoeba) to format your campaign data. Ensure all required fields are filled out correctly.
-2. **Launch the App**: Start the [Streamlit app](https://campaigncreationapp.streamlit.app/). You'll see an interface with an option to upload your Excel file.
+2. **Launch the App**: Start the [Streamlit app](https://sbcampaigngenerator.streamlit.app/). You'll see an interface with an option to upload your Excel file.
 3. **Upload Template File**: Click on 'Choose a file' and select your prepared Excel template.
 4. **Select Options**: Choose whether to apply negative presets and select which child campaigns to create.
 5. **Enter Targets**: For each child campaign, input the desired targets.
