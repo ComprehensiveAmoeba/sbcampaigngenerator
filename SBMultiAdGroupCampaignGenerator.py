@@ -106,9 +106,15 @@ def main():
 
                 if st.checkbox(f"Create Other campaign", key=f"{row['Mother Campaign Name']}_Other"):
                     other_tag = st.text_input(f"Enter a tag for {row['Mother Campaign Name']}_Other (optional)", key=f"other_tag_{row['Mother Campaign Name']}")
-                    selected_child_campaigns.append(f"Other_{other_tag}" if other_tag else "Other")
-                    targets = st.text_area(f"Enter targets for {row['Mother Campaign Name']}_Other", key=f"targets_{row['Mother Campaign Name']}_Other")
-                    child_targets[f"Other_{other_tag}" if other_tag else "Other"] = targets.split("\n")
+                    if other_tag:
+                        selected_child_campaigns.append(other_tag)
+                        targets = st.text_area(f"Enter targets for {row['Mother Campaign Name']}_{other_tag}", key=f"targets_{row['Mother Campaign Name']}_{other_tag}")
+                        child_targets[other_tag] = targets.split("\n")
+                    else:
+                        selected_child_campaigns.append("")  # Ensure an entry is added for child campaign without a tag
+                        targets = st.text_area(f"Enter targets for {row['Mother Campaign Name']}", key=f"targets_{row['Mother Campaign Name']}_Other")
+                        if targets.strip():
+                            child_targets[""] = targets.split("\n")
 
                 campaign_data.append({
                     "mother_campaign": row['Mother Campaign Name'],
@@ -119,14 +125,17 @@ def main():
 
             if st.button("Generate Output File"):
                 output_data = []
-
                 today = datetime.today().strftime('%Y%m%d')
 
                 for data in campaign_data:
                     mother_campaign = data['mother_campaign']
                     row = data['row_data']  # Retrieve the row data for the specific mother campaign
                     for child in data['selected_child_campaigns']:
-                        child_campaign_name = f"{mother_campaign}_{child}"
+                        if child:  # Check if the child is not an empty string
+                            child_campaign_name = f"{mother_campaign}_{child}"
+                        else:
+                            child_campaign_name = mother_campaign  # No additional tag
+
                         campaign_id = random_string()
 
                         # Campaign entity
@@ -188,7 +197,7 @@ def main():
                                 'State': "enabled",
                                 'Landing Page URL': landing_page_url,
                                 'Landing Page Type': row['Landing Page Type'],
-                                'Creative ASINs': row['Creative ASINs'].replace(", ", "_"),
+                                'Creative ASINs': row['Creative ASINs'],
                                 'Brand name': row['Brand'],
                                 'Brand Logo Asset ID': brand_logo_asset_id,
                                 'Creative Headline': creative_headline
@@ -267,6 +276,7 @@ def main():
                     file_name="campaigns_output.xlsx",
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
+
 
     with tabs[1]:
         st.header("Naming Convention Generator")
